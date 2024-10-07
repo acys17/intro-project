@@ -1,18 +1,15 @@
-
-
 import { getdata, putdata } from "./api.js"
 import { showform, getformfieldvalue, setformfieldvalue, clearform, gettablebody, cleartablerows } from "./form.js"
 import { findancestorbytype } from "./dom.js"
 
 document.addEventListener( "DOMContentLoaded", async function() {
-
   document.getElementById( "addperson" ).addEventListener( "click", addpersoninput )
   await gopeople()
 } )
 
 
 /**
- * 
+ *
  * @returns { Promise< object > }
  */
 async function fetchpeople() {
@@ -30,11 +27,11 @@ async function addperson( name, email, notes ) {
 }
 
 /**
- * 
- * @param { string } id 
- * @param { string } name 
- * @param { string } email 
- * @param { string } notes 
+ *
+ * @param { string } id
+ * @param { string } name
+ * @param { string } email
+ * @param { string } notes
  */
 async function updateperson( id, name, email, notes ) {
   await putdata( "people", { id, name, email, notes } )
@@ -55,39 +52,42 @@ async function gopeople() {
 }
 
 /**
- * 
+ *
  */
 function addpersoninput() {
-
   clearform( "personform" )
   showform( "personform", async () => {
-
-    await addperson( getformfieldvalue( "personform-name" ), 
-                      getformfieldvalue( "personform-email" ), 
-                      getformfieldvalue( "personform-notes" ) )
+    await addperson( 
+      getformfieldvalue( "personform-name" ), 
+      getformfieldvalue( "personform-email" ), 
+      getformfieldvalue( "personform-notes" ) )
     await gopeople()
   } )
 }
 
 /**
- * 
+ *
  */
 function editperson( ev ) {
-
   clearform( "personform" )
   const personrow = findancestorbytype( ev.target, "tr" )
   setformfieldvalue( "personform-name", personrow.person.name )
 
-  showform( "personform", () => console.log("submitted peopleform") )
-
+  showform( "personform", async () => {
+    await updateperson( 
+      personrow.person.id, 
+      getformfieldvalue( "personform-name" ), 
+      getformfieldvalue( "personform-email" ), 
+      getformfieldvalue( "personform-notes" ) )
+    await gopeople()
+  } )
 }
 
 /**
- * 
+ *
  * @param { object } person
  */
-export function addpersondom( person ) {
-
+function addpersondom( person ) {
   const table = gettablebody( "peopletable" )
   const newrow = table.insertRow()
 
