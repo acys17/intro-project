@@ -5,6 +5,6 @@
     "moduleResolution": "node",
     "checkJs": true
   },
-  "include": [ "index.js", "lib/*.js", "public/js/*.js", "test/interface/*.spec.js" ],
+  "include": [ "index.js", "lib/*.js", "public/js/*.js", "test/interface/*.spec.js", "public/js/api.js" ],
   "exclude": [ "node_modules" ]
 }
