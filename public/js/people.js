@@ -7,7 +7,6 @@ document.addEventListener( "DOMContentLoaded", async function() {
   await gopeople()
 } )
 
-
 /**
  *
  * @returns { Promise< object > }
@@ -36,8 +35,6 @@ async function addperson( name, email, notes ) {
 async function updateperson( id, name, email, notes ) {
   await putdata( "people", { id, name, email, notes } )
 }
-
-
 
 /**
  * @returns { Promise }
@@ -68,7 +65,7 @@ function addpersoninput() {
 /**
  *
  */
-function editperson( ev ) {
+function editpersoninput( ev ) {
   clearform( "personform" )
   const personrow = findancestorbytype( ev.target, "tr" )
   setformfieldvalue( "personform-name", personrow.person.name )
@@ -102,7 +99,7 @@ function addpersondom( person ) {
 
   const editbutton = document.createElement( "button" )
   editbutton.textContent = "Edit"
-  editbutton.addEventListener( "click", editperson )
+  editbutton.addEventListener( "click", editpersoninput )
 
   cells[ 8 ].appendChild( editbutton )
 }
